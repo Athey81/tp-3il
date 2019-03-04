@@ -1,6 +1,7 @@
 .menu {
     display: flex;
     list-style: none;
+    background-color: #CCC !important;
 }
 
 .menu li {

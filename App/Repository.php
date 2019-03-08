@@ -1,26 +1,29 @@
 <?php
 
-require_once __DIR__.'/../configuration.php';
+namespace App;
+
+use \PDO;
 
 class Repository
 {
-    public static function connect()
-    {
-        $database = [
-            'host' => 'localhost',
-            'base' => 'tp',
-            'user' => 'tp',
-            'password' => 'secret'
-        ];
-        $pdo = new PDO("mysql:host=".$database['host'].";dbname=".$database['base'],$database['user'],$database['password']);
-        return new self($pdo);
-    }
 
     protected $pdo;
 
-    public function __construct($pdo)
-    {
-        $this->pdo = $pdo;
+    public function __construct($host, $name, $user, $pass){
+        $this->host = $host;
+        $this->name = $name;
+        $this->user = $user;
+        $this->pass = $pass;
+        $this->getPDO();
+    }
+
+    private function getPDO(){
+        if($this->pdo === null){
+            $pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host, $this->user, $this->pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo = $pdo;
+        }
+        return $this->pdo;
     }
 
     public function query($query)

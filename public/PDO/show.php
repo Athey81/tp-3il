@@ -4,7 +4,7 @@ $connection = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
 
 $result = $connection->query('SELECT id, title, content FROM article WHERE id = '.$_GET['id']);
 
-$row = $result->fetch(PDO::FETCH_ASSOC);
+$row = $result->fetch();
 
 ?>
 

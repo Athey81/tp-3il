@@ -1,9 +1,6 @@
 <?php
 
-
 require_once __DIR__ . '/../controler/ArticleController.php';
-
-
 
 // route the request internally
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

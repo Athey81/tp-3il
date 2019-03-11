@@ -4,7 +4,6 @@ $connection = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
 
 $result = $connection->query('SELECT id, title, content FROM article');
 ?>
-
     <!DOCTYPE html>
     <html>
     <head>
@@ -13,7 +12,7 @@ $result = $connection->query('SELECT id, title, content FROM article');
     <body>
     <h1>Liste des articles</h1>
     <ul>
-        <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
+        <?php while ($row = $result->fetch()): ?>
             <li>
                 <a href="show.php?id=<?= $row['id'] ?>">
                     <?= $row['title'] ?>

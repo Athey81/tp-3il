@@ -3,7 +3,7 @@ $menu = 'index';
 include('header.php');
 ?>
 <div class="container">
-    <?php include('menu2.php'); ?>
+    <?php include('menu.php'); ?>
     <div class="header">
         <?php
             $array = ['test1', 'test2', 'test3'];

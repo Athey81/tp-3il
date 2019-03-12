@@ -3,7 +3,7 @@ $menu = 'presentation';
 include('header.php');
 ?>
 <div class="container">
-    <?php include('menu2.php'); ?>
+    <?php include('menu.php'); ?>
     <div class="header">
         <h1>Présentation</h1>
         <?php

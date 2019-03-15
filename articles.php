@@ -2,8 +2,14 @@
 $menu = 'article';
 include('header.php');
 
-$connection = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
-$result = $connection->query('SELECT id, title, content FROM article');
+try {
+    $connection = new PDO("mysql:host=localhost;dbname=tp;charset=UTF8", 'tp', 'secret');
+    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Échec lors de la connexion : ' . $e->getMessage();
+}
+
+$result = $connection->query('SELECT * FROM article');
 
 
 ?>

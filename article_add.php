@@ -2,19 +2,32 @@
 $menu = 'article';
 include('header.php');
 
+$message = null;
 if (isset($_POST['title']) && isset($_POST['content'])) {
-    $instance = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
-    $reponse = $instance->prepare('INSERT INTO article (title, content) VALUES(:title, :content)');
+    try {
+        $instance = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
+        $instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo 'Échec lors de la connexion : ' . $e->getMessage();
+    }
+    $reponse = $instance->prepare('INSERT INTO article (title, content) VALUES(:test, :content)');
     $reponse->execute([
-        'title' => $_POST['title'],
+        'test' => $_POST['title'],
         'content' => $_POST['content'],
     ]);
-    echo "Article bien ajouté";
+    $message =  "Article bien ajouté";
 }
 
 ?>
 <div class="container">
     <?php include('menu.php'); ?>
+    <?php
+    if ($message !== null) {
+        echo "<div class='alert alert-success'>";
+        echo $message;
+        echo "</div>";
+    }
+    ?>
     <div class="header">
        <form method="post">
            <div class="row">

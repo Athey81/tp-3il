@@ -1,6 +1,11 @@
 <?php
 $menu = 'article';
 include('header.php');
+
+echo "<pre>";
+
+var_dump($_GET);
+echo "</pre>";
 $connection = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
 $result = $connection->query('SELECT id, title, content FROM article WHERE id = '.$_GET['id']);
 $row = $result->fetch();

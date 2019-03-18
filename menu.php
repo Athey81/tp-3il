@@ -2,6 +2,9 @@
 $menus[] = ['link' =>'index.php', 'name' => 'Accueil'];
 $menus[] = ['link' =>'presentation.php', 'name' => 'Présentation'];
 $menus[] = ['link' =>'articles.php', 'name' => 'Articles'];
+$menus[] = ['link' =>'users.php', 'name' => 'Utilisateurs'];
+$menus[] = ['link' =>'login.php', 'name' => 'Login'];
+$menus[] = ['link' =>'logout.php', 'name' => 'Logout'];
 
 function isActive(array $menu)
 {
@@ -20,4 +23,7 @@ function isActive(array $menu)
             </li>
         <?php } ?>
     </ul>
+    <?php if (isset($_SESSION['username'])): ?>
+        <p>Bienvenue <?= $_SESSION['username']?></p>
+    <?php endif ?>
 </nav>

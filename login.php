@@ -14,23 +14,22 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
 //    $password = password_hash($_POST['password'], PASSWORD_ARGON2I);
 
 
-    echo $password;
-    $reponse = $instance->prepare('SELECT * FROM user WHERE username = :username AND password = :password');
+    $reponse = $instance->prepare('SELECT * FROM user WHERE username = :username');
     $reponse->execute([
         'username' => $_POST['username'],
-        'password' => $_POST['password']
     ]);
     $row = $reponse->fetch();
 
-    if (is_array($row) === false) {
-        $message['color'] =  'danger';
-        $message['text'] =  "Utilisateur non trouvé";
 
-    } else {
+    if (password_verify($_POST['password'], $row['password'])) {
         $message['color'] =  'success';
         $message['text'] =  "Utilisateur bien trouvé";
         $_SESSION['id'] = $row['id'];
         $_SESSION['username'] =  $row['username'];
+    } else {
+        $message['color'] =  'danger';
+        $message['text'] =  "Utilisateur non trouvé";
+
     }
 }
 

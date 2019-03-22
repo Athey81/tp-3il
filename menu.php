@@ -16,6 +16,7 @@ function isActive(array $menu)
 
 function hasRight(array $menu) {
 
+    // test pour voir si il faut être admin pour voir le menu
     if (isset($menu['admin']) && $menu['admin'] === true) {
         if (isset($_SESSION['admin']) && ($_SESSION['admin'] === true)) {
             return true;
@@ -23,15 +24,18 @@ function hasRight(array $menu) {
         return false;
     }
 
+    // test pour voir si il faut être connecter et que la session est active
     if (isset($menu['connect'], $_SESSION['id']) && $menu['connect'] === true) {
         return true;
     }
 
 
+    // test pour voir si il faut être déconnecter afficher le menu
     if (isset($menu['connect']) && $menu['connect'] === false && isset($_SESSION['id']) === false ) {
         return true;
     }
 
+    // Test pour voir si la variable du tableau connect est pas initialisé, si c'est le cas, on affiche
     if (isset($menu['connect']) === false) {
         return true;
 

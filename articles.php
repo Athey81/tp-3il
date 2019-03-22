@@ -2,15 +2,7 @@
 $menu = 'article';
 include('header.php');
 
-try {
-    $connection = new PDO("mysql:host=localhost;dbname=tp;charset=UTF8", 'tp', 'secret');
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo 'Échec lors de la connexion : ' . $e->getMessage();
-}
-
-$result = $connection->query('SELECT * FROM article');
-
+$result = $repository->query('SELECT * FROM article');
 
 ?>
 <div class="container">

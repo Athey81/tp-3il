@@ -11,11 +11,18 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
     } catch (PDOException $e) {
         echo 'Échec lors de la connexion : '.$e->getMessage();
     }
-    $reponse = $instance->prepare('INSERT INTO user (username, password) VALUES(:username, :password)');
+
+    if (isset($_POST['admin']) && $_POST['admin'] === 'on') {
+        $admin = 1;
+    } else {
+        $admin = 0;
+    }
+    $reponse = $instance->prepare('INSERT INTO user (username, password, admin) VALUES(:username, :password, :admin)');
     $reponse->execute(
         [
             'username' => $_POST['username'],
             'password' => password_hash($_POST['password'], PASSWORD_ARGON2I),
+            'admin' => $admin
         ]
     );
     $message = "Utilisateur bien ajouté";
@@ -40,6 +47,11 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
                 <label>Password :</label>
                 <input type="text" name="password" class="form-control">
             </div>
+            <div class="form-group">
+                <label>Administrateur :</label>
+                <input type="checkbox" name="admin" class="form-control">
+            </div>
+
             <button class="btn btn-primary">Ajouter</button>
         </form>
 </div>

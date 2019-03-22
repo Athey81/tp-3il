@@ -4,17 +4,12 @@ include('header.php');
 
 $message = null;
 if (isset($_POST['title']) && isset($_POST['content'])) {
-    try {
-        $instance = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
-        $instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo 'Échec lors de la connexion : ' . $e->getMessage();
-    }
-    $reponse = $instance->prepare('INSERT INTO article (title, content) VALUES(:test, :content)');
-    $reponse->execute([
+
+    $reponse = $repository->prepare('INSERT INTO article (title, content) VALUES(:test, :content)', [
         'test' => $_POST['title'],
         'content' => $_POST['content'],
     ]);
+    
     $message =  "Article bien ajouté";
 }
 

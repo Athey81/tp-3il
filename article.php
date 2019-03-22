@@ -2,8 +2,7 @@
 $menu = 'article';
 include('header.php');
 
-$connection = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
-$result = $connection->query('SELECT id, title, content FROM article WHERE id = '.$_GET['id']);
+$result = $repository->query('SELECT id, title, content FROM article WHERE id = '.$_GET['id']);
 $row = $result->fetch();
 ?>
 <div class="container">

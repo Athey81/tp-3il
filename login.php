@@ -5,17 +5,7 @@ include('header.php');
 $message = null;
 if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['username']) && !empty($_POST['password'])) {
 
-    try {
-        $instance = new PDO("mysql:host=localhost;dbname=tp", 'tp', 'secret');
-        $instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo 'Échec lors de la connexion : ' . $e->getMessage();
-    }
-//    $password = password_hash($_POST['password'], PASSWORD_ARGON2I);
-
-
-    $reponse = $instance->prepare('SELECT * FROM user WHERE username = :username');
-    $reponse->execute([
+    $reponse = $repository->prepare('SELECT * FROM user WHERE username = :username', [
         'username' => $_POST['username'],
     ]);
     $row = $reponse->fetch();
@@ -26,12 +16,18 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
         $message['text'] =  "Utilisateur bien trouvé";
         $_SESSION['id'] = $row['id'];
         $_SESSION['username'] =  $row['username'];
+        if ($row['admin'] === "1") {
+            $_SESSION['admin'] = true;
+        } else {
+            $_SESSION['admin'] = false;
+        }
     } else {
         $message['color'] =  'danger';
         $message['text'] =  "Utilisateur non trouvé";
 
     }
 }
+
 
 ?>
 <div class="container">
@@ -42,8 +38,10 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
         echo $message['text'];
         echo "</div>";
     }
+
+    if (!isset($_SESSION['id'])) {
     ?>
-    <div class="header">
+
         <form method="post">
             <div class="row">
                 <div class="col">
@@ -59,7 +57,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
             </div>
             <button>Login</button>
         </form>
-    </div>
+    <?php } ?>
 </div>
 </body>
 </html>

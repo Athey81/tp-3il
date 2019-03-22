@@ -29,6 +29,13 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
 }
 
 ?>
+<script>
+    let test = document.getElementById('test');
+    test.addEventListener('click', function(event) {
+        event.preventDefault();
+        test.innerHTML = "Onload"
+    });
+</script>
 <div class="container">
     <?php include('menu.php'); ?>
     <?php
@@ -52,7 +59,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
                 <input type="checkbox" name="admin" class="form-control">
             </div>
 
-            <button class="btn btn-primary">Ajouter</button>
+            <button id="test" class="btn btn-primary">Ajouter</button>
         </form>
 </div>
 </body>
